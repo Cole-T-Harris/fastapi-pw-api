@@ -1,0 +1,5 @@
+{
+    "zipcode": {"type": "integer"},
+    "radiusInMiles": {"type": "integer"},
+    "limit": {"type": "integer"}
+}
