@@ -8,7 +8,7 @@ class LocationsBase(BaseModel):
 class LocationsResponse(BaseModel):
     zipcode: int
     radiusInMiles: int 
-    limit: int 
+    limit: int
 
 class ProductsBase(BaseModel):
     term: str
