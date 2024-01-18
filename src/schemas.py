@@ -50,15 +50,15 @@ class Store(BaseModel):
     name: str
     address: Address
     geolocation: Geolocation
-    # thumbnail: str
-    hours: Hours 
+    thumbnail: str
+    hours: Hours
+    distance: float 
 
 class LocationsResponse(BaseModel):
     zipcode: int
     radiusInMiles: int 
     limit: int
     stores: List[Store]
-    distances: List[float]
 
 #Products API Endpoint Models
 class ProductsBase(BaseModel):
