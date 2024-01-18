@@ -68,13 +68,13 @@ class ProductsBase(BaseModel):
     limit: int
 
 class AisleLocation(BaseModel):
-    bayNumber: Optional[str] = None
-    description: Optional[str] = None
-    number: Optional[str] = None
-    numberOfFacings: Optional[str] = None
-    side: Optional[str] = None
-    shelfNumber: Optional[str] = None
-    shelfPositionInBay: Optional[str] = None
+    bayNumber: Optional[str] = ""
+    description: Optional[str] = ""
+    number: Optional[str] = ""
+    numberOfFacings: Optional[str] = ""
+    side: Optional[str] = ""
+    shelfNumber: Optional[str] = ""
+    shelfPositionInBay: Optional[str] = ""
 
 class ProductImages(BaseModel):
     thumbnail: Optional[str] = None
