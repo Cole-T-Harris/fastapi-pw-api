@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from ...models import ProductsBase, ProductsResponse
+from ...schemas import ProductsBase, ProductsResponse
 
 router = APIRouter()
 

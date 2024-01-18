@@ -1,23 +1,11 @@
-from pydantic import BaseModel
+from sqlalchemy import Column, Integer, String
 
-class LocationsBase(BaseModel):
-    zipcode: int
-    radiusInMiles: int 
-    limit: int 
+from .database import Base
 
-class LocationsResponse(BaseModel):
-    zipcode: int
-    radiusInMiles: int 
-    limit: int
+#Database Models
+class Thumbnail(Base):
+    __tablename__ = "thumbnails"
 
-class ProductsBase(BaseModel):
-    term: str
-    locationId: int
-    start: int
-    limit: int
-
-class ProductsResponse(BaseModel):
-    term: str
-    locationId: int
-    start: int
-    limit: int
+    id = Column(Integer, primary_key=True)
+    branch = Column(String, unique=True, index=True)
+    url = Column(String)
