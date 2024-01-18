@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 #Database pydantic Schemas
 class ThumbnailBase(BaseModel):
@@ -67,8 +67,51 @@ class ProductsBase(BaseModel):
     start: int
     limit: int
 
+class AisleLocation(BaseModel):
+    bayNumber: Optional[str] = None
+    description: Optional[str] = None
+    number: Optional[str] = None
+    numberOfFacings: Optional[str] = None
+    side: Optional[str] = None
+    shelfNumber: Optional[str] = None
+    shelfPositionInBay: Optional[str] = None
+
+class ProductImages(BaseModel):
+    thumbnail: Optional[str] = None
+    frontImage: Optional[str] = None
+    backImage: Optional[str] = None
+    rightImage: Optional[str] = None
+    leftImage: Optional[str] = None
+
+class ProductPrice(BaseModel):
+    price: Optional[float] = None
+    promo: Optional[float] = None
+
+class ProductPagination(BaseModel):
+    start: Optional[int] = 0
+    limit: Optional[int] = 0
+    total: Optional[int] = 0
+
+class ProductMetaData(BaseModel):
+    pagination: ProductPagination
+
+class Product(BaseModel):
+    productId: str
+    aisleLocations: Optional[List[AisleLocation]] = []
+    brand: Optional[str] = ""
+    countryOfOrigin: Optional[str] = ""
+    description: Optional[str] = ""
+    stock: Optional[str] = None
+    prices: Optional[ProductPrice] = None
+    size: Optional[str] = None
+    priceSize: Optional[str] = None
+
+
 class ProductsResponse(BaseModel):
     term: str
     locationId: int
     start: int
     limit: int
+    products: Optional[List[Product]] = []
+    meta: ProductMetaData
+    
