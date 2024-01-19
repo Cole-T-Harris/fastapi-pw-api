@@ -105,6 +105,7 @@ class Product(BaseModel):
     prices: Optional[ProductPrice] = None
     size: Optional[str] = None
     priceSize: Optional[str] = None
+    images: Optional[ProductImages] = None
 
 
 class ProductsResponse(BaseModel):

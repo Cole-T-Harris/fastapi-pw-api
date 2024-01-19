@@ -12,8 +12,8 @@ logging.basicConfig(level=logging.ERROR)
 #Final URL for Token URL
 KROGER_TOKEN_URL = "https://api.kroger.com/v1/connect/oauth2/token"
 
-# Create an in-memory cache with a time-to-live (TTL) of 1 hour
-token_cache = TTLCache(maxsize=5, ttl=3600)  
+# Create an in-memory cache with a time-to-live (TTL) of 1750 seconds (typical kroger token expires in 1800 s)
+token_cache = TTLCache(maxsize=5, ttl=1750)  
 
 async def get_access_token(token_cache_key: str, scope: str, client: httpx.AsyncClient = Depends(httpx_client)):
     token = token_cache.get(token_cache_key)
