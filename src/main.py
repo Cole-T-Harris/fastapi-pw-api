@@ -15,7 +15,8 @@ app = FastAPI()
 # Configure CORS
 origins = [
     "https://www.coleharris.dev/",
-    "https://d3hkh53fn525s5.cloudfront.net"
+    "https://d3hkh53fn525s5.cloudfront.net",
+    "*"
 ]
 
 app.add_middleware(
