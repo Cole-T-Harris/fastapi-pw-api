@@ -13,10 +13,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Login to Docker Hub
-      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Assume AWS IAM Role
+      id: assume-role
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: ${{ secrets.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+        role-external-id: ${{ github.event_name }}
 
     - name: Build and push Docker image
       run: |
-        docker build -t ctharris334/personal-website:latest .
-        docker push ctharris334/personal-website:latest
+        # Build the Docker image
+        docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fastapi-pw:latest .
+        
+        # Authenticate Docker with ECR
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fastapi-pw
+
+        # Push the Docker image to ECR
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fastapi-pw:latest
