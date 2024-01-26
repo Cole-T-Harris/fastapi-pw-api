@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Authentication
-.pem
+GroceryListAPIKP.pem
