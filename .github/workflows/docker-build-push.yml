@@ -22,7 +22,7 @@ jobs:
 
       - name: Install Amazon ECR Credential Helper
         run: |
-          sudo yum install -y amazon-ecr-credential-helper
+          sudo apt-get install -y amazon-ecr-credential-helper
 
       - name: Amazon ECR Docker Login
         run: |
