@@ -3,31 +3,30 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main
+      - main 
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Assume AWS IAM Role
-      id: assume-role
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: ${{ secrets.AWS_REGION }}
-        role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-        role-external-id: ${{ github.event_name }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Build and push Docker image
-      run: |
-        # Build the Docker image
-        docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fastapi-pw:latest .
-        
-        # Authenticate Docker with ECR
-        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fastapi-pw
+      - name: Login to Amazon ECR
+        id: login-ecr
+        run: |
+          echo ${{ secrets.AWS_REGISTRY_PASSWORD }} | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
 
-        # Push the Docker image to ECR
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fastapi-pw:latest
+      - name: Build and push Docker image to ECR
+        run: |
+          docker build -t fastapi-pw:latest .
+          docker tag fastapi-pw:latest ${{ secrets.AWS_REGISTRY_URL }}/fastapi-pw:latest
+          docker push ${{ secrets.AWS_REGISTRY_URL }}/fastapi-pw:latest
