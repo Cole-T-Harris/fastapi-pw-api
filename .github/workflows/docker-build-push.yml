@@ -20,10 +20,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}  
 
-      - name: Docker login to Amazon ECR
+      - name: Install Amazon ECR Credential Helper
         run: |
-          echo ${{ secrets.AWS_REGISTRY_PASSWORD }} | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
-          docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
+          sudo yum install -y amazon-ecr-credential-helper
+
+      - name: Amazon ECR Docker Login
+        run: |
+          aws ecr get-login-password --region your-ecr-region | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
 
       - name: Build and push Docker image to ECR
         run: |
