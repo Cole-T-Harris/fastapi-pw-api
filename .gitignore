@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Authentication
-GroceryListAPIKP.pem
+ec2-startup.sh
