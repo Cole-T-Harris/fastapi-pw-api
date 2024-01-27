@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main  # Change this to your main branch
+      - main  
 
 jobs:
   build-and-push:
@@ -26,6 +26,6 @@ jobs:
 
       - name: Build and push Docker image to ECR
         run: |
-          docker build -t your-repo-name:latest .
-          docker tag your-repo-name:latest ${{ secrets.AWS_REGISTRY_URL }}/your-repo-name:latest
-          docker push ${{ secrets.AWS_REGISTRY_URL }}/your-repo-name:latest
+          docker build -t fastapi-pw:latest .
+          docker tag fastapi-pw:latest ${{ secrets.AWS_REGISTRY_URL }}/fastapi-pw:latest
+          docker push ${{ secrets.AWS_REGISTRY_URL }}/fastapi-pw:latest
