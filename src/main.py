@@ -14,7 +14,7 @@ app = FastAPI()
 
 # Configure CORS
 origins = [
-    "https://www.coleharris.dev/",
+    "https://www.coleharris.dev",
     "https://d3hkh53fn525s5.cloudfront.net"
 ]
 
@@ -22,7 +22,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
